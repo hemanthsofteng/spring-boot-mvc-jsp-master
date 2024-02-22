@@ -12,6 +12,7 @@ RUN rm openjdk-11.0.2_linux-x64_bin.tar.gz
 ADD https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.85/bin/apache-tomcat-9.0.85.tar.gz .
 RUN tar -xvzf apache-tomcat-9.0.85.tar.gz
 RUN rm apache-tomcat-9.0.85.tar.gz
-
-COPY target/foodies-0.0.1-SNAPSHOT.jar /tmp/foodies.jar
-CMD ["java", "-jar", "/tmp/foodies.jar"]
+COPY target/spring-boot-mvc-jsp-0.0.1-SNAPSHOT.war ${TOMCAT_HOME}/webapps
+COPY run.sh /tmp
+RUN chmod u+x /tmp/run.sh
+ENTRYPOINT [ "/tmp/run.sh" ]
