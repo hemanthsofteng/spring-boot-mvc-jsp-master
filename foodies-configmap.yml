@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: foodiesconfigmap
+  labels:
+    env: development
+data:
+  username: Hari
+  password: Pus

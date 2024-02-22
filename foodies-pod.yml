@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: foodiespod
+  labels:
+    name: foodies
+spec:
+  containers:
+  - name: foodies
+    image: hemanadhareddy/foodies:1.0
+    ports:
+    - name: tomcatport
+      containerPort: 8080
+      protocol: TCP
+    livenessProbe:
+      httpGet:
+        path: /data/fetch
+        port: 8080
+      initialDelaySeconds: 60
+      timeoutSeconds: 10
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+      limits:
+        cpu: "1000m"
+        memory: "1000Mi"
+    env:
+    - name: username
+      valueFrom:
+        configMapKeyRef:
+          name: foodiesconfigmap
+          key: username
+    - name: password
+      valueFrom:
+        configMapKeyRef:
+          name: foodiesmyappconfigmap
+          key: password
+      volumeMounts:
+      - name: foodiesmyappconfigmapvolume
+        mountPath: "/config"
+        readOnly: true
+    volumes:
+    - name: foodiesmyappconfigmapvolume
+      configMap:
+        name: foodiesmyappconfigmap
+        items:
+        - key: myapp.properties
+          value: "myapp.properties"

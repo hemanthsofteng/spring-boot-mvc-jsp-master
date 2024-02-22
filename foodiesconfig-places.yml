@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: foodiesmyappconfigmap
+  labels:
+    app: foodiesmyappconfigmap
+data:
+  myapp.properties: |
+    username: oyo
+    password: oyoo
